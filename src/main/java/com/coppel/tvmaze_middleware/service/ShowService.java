@@ -5,6 +5,7 @@ import com.coppel.tvmaze_middleware.model.tvmaze.TvMazeShow;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ShowService {
@@ -45,5 +46,8 @@ public class ShowService {
         }
 
         return null;
+    }
+    public Map<String, Object> getShow(Integer showId) {
+        return tvMazeClient.getShow(showId);
     }
 }

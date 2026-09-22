@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import java.util.Map;
 
 import java.util.List;
 
@@ -29,5 +31,12 @@ public class ShowController {
             String searchQuery
     ) {
         return showService.search(searchQuery);
+    }
+
+    @GetMapping("/{showId}")
+    public Map<String, Object> getShow(
+            @PathVariable Integer showId
+    ) {
+        return showService.getShow(showId);
     }
 }

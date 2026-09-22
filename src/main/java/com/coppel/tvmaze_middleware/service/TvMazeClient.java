@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class TvMazeClient {
@@ -30,12 +31,12 @@ public class TvMazeClient {
                 .body(new ParameterizedTypeReference<>() {});
     }
 
-    public TvMazeShow getShow(Integer showId) {
+    public Map<String, Object> getShow(Integer showId) {
 
         return restClient
                 .get()
                 .uri("/shows/{id}", showId)
                 .retrieve()
-                .body(TvMazeShow.class);
+                .body(new ParameterizedTypeReference<>() {});
     }
 }
