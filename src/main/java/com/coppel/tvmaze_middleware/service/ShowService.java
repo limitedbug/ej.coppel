@@ -6,14 +6,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import com.coppel.tvmaze_middleware.model.mongo.ShowCache;
+import com.coppel.tvmaze_middleware.repository.ShowCacheRepository;
+
+import java.time.Instant;
 
 @Service
 public class ShowService {
 
     private final TvMazeClient tvMazeClient;
-
-    public ShowService(TvMazeClient tvMazeClient) {
+    private final ShowCacheRepository showCacheRepository;
+    public ShowService(TvMazeClient tvMazeClient, ShowCacheRepository showCacheRepository) {
         this.tvMazeClient = tvMazeClient;
+        this.showCacheRepository = showCacheRepository;
     }
 
     public List<SearchShowResponse> search(String query) {
@@ -48,6 +53,24 @@ public class ShowService {
         return null;
     }
     public Map<String, Object> getShow(Integer showId) {
-        return tvMazeClient.getShow(showId);
+
+        return showCacheRepository.findById(showId)
+                .map(ShowCache::data)
+                .orElseGet(() -> fetchAndCacheShow(showId));
+    }
+
+    private Map<String, Object> fetchAndCacheShow(Integer showId) {
+
+        Map<String, Object> show = tvMazeClient.getShow(showId);
+
+        ShowCache cache = new ShowCache(
+                showId,
+                show,
+                Instant.now()
+        );
+
+        showCacheRepository.save(cache);
+
+        return show;
     }
 }
