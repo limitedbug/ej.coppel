@@ -1,7 +1,6 @@
 package com.coppel.tvmaze_middleware.service;
 
 import com.coppel.tvmaze_middleware.model.tvmaze.TvMazeSearchResult;
-import com.coppel.tvmaze_middleware.model.tvmaze.TvMazeShow;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
