@@ -1,4 +1,6 @@
 package com.coppel.tvmaze_middleware.model.dto;
 
-public class CommentResponse {
+public record CommentResponse(
+        String message
+) {
 }

@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.coppel.tvmaze_middleware.model.dto.CommentResponse;
+import com.coppel.tvmaze_middleware.model.dto.CreateCommentRequest;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Map;
 
 import java.util.List;
@@ -37,6 +45,14 @@ public class ShowController {
     public Map<String, Object> getShow(
             @PathVariable Integer showId
     ) {
-        return showService.getShow(showId);
+        return showService.getShowWithComments(showId);
+    }
+
+    @PostMapping("/{showId}/comments")
+    public CommentResponse addComment(
+            @PathVariable Integer showId,
+            @Valid @RequestBody CreateCommentRequest request
+    ) {
+        return showService.addComment(showId, request);
     }
 }

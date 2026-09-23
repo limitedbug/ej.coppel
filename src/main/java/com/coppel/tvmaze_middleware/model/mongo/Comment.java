@@ -1,4 +1,7 @@
 package com.coppel.tvmaze_middleware.model.mongo;
 
-public class Comment {
+public record Comment(
+        String comment,
+        Integer rating
+) {
 }
